@@ -1,5 +1,11 @@
+import Container from "./components/Container";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Container />
+    </>
+  );
 }
 
 export default App;
