@@ -1,77 +1,100 @@
 import Styles from "../styles.module.sass";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCovid, getCountries, changeCountry } from "../redux/dataSlice";
+import { useEffect } from "react";
 
 function Content() {
-  return (
-    <div className="row mt-2">
-      <div className="col-12 col-md-6 col-lg-3">
-        <div
-          className={
-            Styles.covid_card +
-            " d-flex flex-column justify-content-between text-start"
-          }
+  const dispatch = useDispatch();
+  const covidData = useSelector((state) => state.covid.data);
+  const status = useSelector((state) => state.covid.status);
+  const country = useSelector((state) => state.covid.country);
+  const countries = useSelector((state) => state.covid.countries);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCovid(country));
+    }
+    dispatch(getCountries());
+  }, [dispatch, status, country]);
+
+  return status === "succeeded" ? (
+    <>
+      <div>
+        <select
+          className="mt-3"
+          style={{
+            outline: "none",
+            padding: "6px",
+            border: "solid 1px #000",
+            backgroundColor: "transparent",
+            boxShadow: "4px 4px 0px #000",
+          }}
+          onChange={(e) => dispatch(changeCountry(e.target.value))}
         >
-          <b>Infected</b>
-          <h5>
-            <span>Count</span>
-          </h5>
-          <p>Last update at: Wed Sep 21 2022 06:22:58</p>
-          <span>
-            Number of <b>infect</b> cases of COVID-19
-          </span>
+          <option value={country}>{country}</option>
+          {countries.map((data, index) => (
+            <option key={index} value={data.name}>
+              {data.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="row justify-content-center mt-2">
+        <div className="col-12 col-md-4 col-lg-3">
+          <div
+            className={
+              Styles.covid_card +
+              " d-flex flex-column justify-content-between text-start"
+            }
+          >
+            <b>Infected</b>
+            <h5>
+              <span>{covidData.confirmed.value}</span>
+            </h5>
+            <p>Last update at: {covidData.lastUpdate}</p>
+            <span>
+              Number of <b>infect</b> cases of COVID-19
+            </span>
+          </div>
+        </div>
+        <div className="col-12 col-md-4 col-lg-3">
+          <div
+            className={
+              Styles.covid_card +
+              " d-flex flex-column justify-content-between text-start"
+            }
+          >
+            <b>Recovered</b>
+            <h5>
+              <span>{covidData.recovered.value}</span>
+            </h5>
+            <p>Last update at: {covidData.lastUpdate}</p>
+            <span>
+              Number of <b>recoveries</b> from COVID-19
+            </span>
+          </div>
+        </div>
+        <div className="col-12 col-md-4 col-lg-3">
+          <div
+            className={
+              Styles.covid_card +
+              " d-flex flex-column justify-content-between text-start"
+            }
+          >
+            <b>Deaths</b>
+            <h5>
+              <span>{covidData.deaths.value}</span>
+            </h5>
+            <p>Last update at: {covidData.lastUpdate}</p>
+            <span>
+              Number of <b>deaths</b> caused by COVID-19
+            </span>
+          </div>
         </div>
       </div>
-      <div className="col-12 col-md-6 col-lg-3">
-        <div
-          className={
-            Styles.covid_card +
-            " d-flex flex-column justify-content-between text-start"
-          }
-        >
-          <b>Recovered</b>
-          <h5>
-            <span>Count</span>
-          </h5>
-          <p>Last update at: Wed Sep 21 2022 06:22:58</p>
-          <span>
-            Number of <b>recoveries</b> from COVID-19
-          </span>
-        </div>
-      </div>
-      <div className="col-12 col-md-6 col-lg-3">
-        <div
-          className={
-            Styles.covid_card +
-            " d-flex flex-column justify-content-between text-start"
-          }
-        >
-          <b>Deaths</b>
-          <h5>
-            <span>Count</span>
-          </h5>
-          <p>Last update at: Wed Sep 21 2022 06:22:58</p>
-          <span>
-            Number of <b>deaths</b> caused by COVID-19
-          </span>
-        </div>
-      </div>
-      <div className="col-12 col-md-6 col-lg-3">
-        <div
-          className={
-            Styles.covid_card +
-            " d-flex flex-column justify-content-between text-start"
-          }
-        >
-          <b>Active</b>
-          <h5>
-            <span>Count</span>
-          </h5>
-          <p>Last update at: Wed Sep 21 2022 06:22:58</p>
-          <span>
-            Number of <b>active</b> cases of COVID-19
-          </span>
-        </div>
-      </div>
-    </div>
+    </>
+  ) : (
+    <h1>Loading...</h1>
   );
 }
 
