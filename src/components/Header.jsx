@@ -9,7 +9,7 @@ function Header() {
         style={{ width: "370px" }}
       />
       <b>Global and Country Wise Cases of Corona Virus</b>
-      <text>(For a Particular country, select a Country from below)</text>
+      <span>(For a Particular country, select a Country from below)</span>
     </div>
   );
 }
