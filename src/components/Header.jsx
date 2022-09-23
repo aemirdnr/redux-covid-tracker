@@ -4,7 +4,7 @@ function Header() {
   return (
     <div className="d-flex flex-column align-items-center gap-1 mt-3">
       <img
-        src="../img/covid.png"
+        src="https://github.com/aemirdnr/redux-covid-tracker/blob/master/img/covid.png?raw=true"
         alt="Covid19 Image"
         style={{ width: "370px" }}
       />
