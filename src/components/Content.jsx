@@ -41,55 +41,42 @@ function Content() {
         </select>
       </div>
       <div className="row justify-content-center mt-2">
-        <div className="col-12 col-md-4 col-lg-3">
+        <div className="col-12 col-md-6">
           <div
             className={
               Styles.covid_card +
+              " " +
+              Styles.infected +
               " d-flex flex-column justify-content-between text-start"
             }
           >
             <b>Infected</b>
             <h5>
-              <span>{covidData.confirmed.value}</span>
+              <span>{covidData.confirmed.value.toLocaleString()}</span>
             </h5>
-            <p>Last update at: {covidData.lastUpdate}</p>
-            <span>
-              Number of <b>infect</b> cases of COVID-19
-            </span>
+            <p>
+              Last update at:{" "}
+              {new Date(covidData.lastUpdate).toLocaleDateString()}
+            </p>
           </div>
         </div>
-        <div className="col-12 col-md-4 col-lg-3">
+        <div className="col-12 col-md-6">
           <div
             className={
               Styles.covid_card +
-              " d-flex flex-column justify-content-between text-start"
-            }
-          >
-            <b>Recovered</b>
-            <h5>
-              <span>{covidData.recovered.value}</span>
-            </h5>
-            <p>Last update at: {covidData.lastUpdate}</p>
-            <span>
-              Number of <b>recoveries</b> from COVID-19
-            </span>
-          </div>
-        </div>
-        <div className="col-12 col-md-4 col-lg-3">
-          <div
-            className={
-              Styles.covid_card +
+              " " +
+              Styles.deaths +
               " d-flex flex-column justify-content-between text-start"
             }
           >
             <b>Deaths</b>
             <h5>
-              <span>{covidData.deaths.value}</span>
+              <span>{covidData.deaths.value.toLocaleString()}</span>
             </h5>
-            <p>Last update at: {covidData.lastUpdate}</p>
-            <span>
-              Number of <b>deaths</b> caused by COVID-19
-            </span>
+            <p>
+              Last update at:{" "}
+              {new Date(covidData.lastUpdate).toLocaleDateString()}
+            </p>
           </div>
         </div>
       </div>
