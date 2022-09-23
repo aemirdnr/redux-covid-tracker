@@ -1,4 +1,5 @@
 import Styles from "../styles.module.sass";
+import Graph from "./Graph.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCovid, getCountries, changeCountry } from "../redux/dataSlice";
 import { useEffect } from "react";
@@ -92,9 +93,10 @@ function Content() {
           </div>
         </div>
       </div>
+      <Graph />
     </>
   ) : (
-    <h1>Loading...</h1>
+    <h1 className="mt-2">Loading...</h1>
   );
 }
 

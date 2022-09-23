@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 //
+
 export const fetchCovid = createAsyncThunk(
   "covidData/getData",
   async (country) => {
@@ -24,12 +25,21 @@ export const getCountries = createAsyncThunk(
   }
 );
 
+export const fetchDailyData = createAsyncThunk(
+  "covidData/getDailyData",
+  async () => {
+    const res = await axios(`https://covid19.mathdro.id/api/daily`);
+    return res.data;
+  }
+);
+
 export const dataSlice = createSlice({
   name: "covid",
   initialState: {
     data: "",
+    dailyData: "",
     country: "Global",
-    countries: ["Global"],
+    countries: [],
     status: "idle",
   },
   reducers: {
@@ -52,6 +62,9 @@ export const dataSlice = createSlice({
     },
     [getCountries.fulfilled]: (state, action) => {
       state.countries = action.payload;
+    },
+    [fetchDailyData.fulfilled]: (state, action) => {
+      state.dailyData = action.payload;
     },
   },
 });
